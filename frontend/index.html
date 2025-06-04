@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Hola Mundo</title>
+</head>
+<body>
+  <h1 id="mensaje">Cargando...</h1>
+
+  <script>
+    fetch('http://localhost:5000/api/hola')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('mensaje').textContent = data.mensaje;
+      })
+      .catch(err => {
+        document.getElementById('mensaje').textContent = 'Error: ' + err;
+      });
+  </script>
+</body>
+</html>
