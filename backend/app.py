@@ -6,7 +6,7 @@ CORS(app)
 
 @app.route('/api/hola')
 def hola():
-    return jsonify({'mensaje': 'Hola mundo desde Flask'})
+    return jsonify({'mensaje': 'Hola desde el back'})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

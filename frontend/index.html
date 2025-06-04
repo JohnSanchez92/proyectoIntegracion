@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Hola Mundo</title>
+  <title>Integracion continua</title>
 </head>
 <body>
   <h1 id="mensaje">Cargando...</h1>
@@ -10,7 +10,7 @@
     fetch('http://localhost:5000/api/hola')
       .then(res => res.json())
       .then(data => {
-        document.getElementById('mensaje').textContent = data.mensaje;
+        document.getElementById('mensaje').textContent = 'Hola desde el front';
       })
       .catch(err => {
         document.getElementById('mensaje').textContent = 'Error: ' + err;
