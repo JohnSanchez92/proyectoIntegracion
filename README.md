@@ -24,3 +24,11 @@ Start the project
   docker compose -f docker-compose.yml -f docker-compose.jenkins.yml up --build
 ```
 
+Solve docker error in jenkins
+
+```bash
+  docker exec -it proyectointegracion-jenkins-1 bash
+  apt-get install -y docker.io
+  apt-get install docker-compose
+```
+
