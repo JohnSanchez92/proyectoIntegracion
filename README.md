@@ -15,13 +15,13 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd my-project
+  cd proyectointegracion
 ```
 
 Start the project
 
 ```bash
-  docker compose -f docker-compose.yml -f docker-compose.jenkins.yml up --build
+  docker compose -f docker-compose.yml up --build
 ```
 
 Solve docker error in jenkins
