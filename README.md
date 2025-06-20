@@ -28,7 +28,8 @@ Solve docker error in jenkins
 
 ```bash
   docker exec -it proyectointegracion-jenkins-1 bash
-  apt-get install -y docker.io
-  apt-get install docker-compose
+  apt-get update && apt-get install -y \
+    docker.io \
+    docker-compose 
 ```
 

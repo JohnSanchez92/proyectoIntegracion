@@ -11,22 +11,32 @@ pipeline {
             }
         }
 
-        stage('Construir imágenes Docker') {
+        stage('Construir contenedores') {
             steps {
-                sh 'docker-compose build'
+                sh 'docker-compose build --no-cache'
             }
         }
 
-        stage('Levantar contenedores') {
+        stage('Verificar archivos en contenedor') {
             steps {
-                sh 'docker-compose up -d'
+                sh 'docker-compose run --rm frontend ls -R /usr/share/nginx/html'
+            }
+        }
+
+        stage('Desplegar') {
+            when {
+                expression { currentBuild.currentResult == 'SUCCESS' }
+            }
+            steps {
+                echo 'Desplegando aplicación...'
             }
         }
     }
 
     post {
         always {
-            echo 'Pipeline terminado.'
+            echo "Limpieza de contenedores temporales si es necesario."
+            sh 'docker-compose down --volumes --remove-orphans || true'
         }
     }
 }
