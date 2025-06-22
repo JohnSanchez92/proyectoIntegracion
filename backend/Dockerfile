@@ -5,4 +5,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 COPY . .
 
-CMD ["python", "app.py", "pytest", "--cov=app", "--cov-report=term-missing"]
+CMD ["python", "app.py", "pytest", "--cov=app", "--cov-report=term-missing", "--cov-report=xml"]
