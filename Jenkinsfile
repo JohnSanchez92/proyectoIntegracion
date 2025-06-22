@@ -19,15 +19,14 @@ pipeline {
 
         stage('Verificar archivos en contenedor') {
             steps {
+                sh 'docker network rm integracion-continua_default || true'
                 sh 'docker-compose run --rm frontend ls -R /usr/share/nginx/html'
             }
         }
 
         stage('Pruebas unitarias backend') {
             steps {
-                // Limpia red antigua para evitar conflicto
                 sh 'docker network rm integracion-continua_default || true'
-                // Ejecuta pruebas
                 sh 'docker-compose run --rm backend pytest --cov=app --cov-report=term-missing'
             }
         }
