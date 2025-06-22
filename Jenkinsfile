@@ -26,7 +26,7 @@ pipeline {
 
         stage('Pruebas unitarias backend') {
             steps {
-                sh 'docker-compose exec --rm backend pytest --cov=app --cov-report=term-missing'
+                sh 'docker-compose exec backend pytest --cov=app --cov-report=xml'
             }
         }
 
