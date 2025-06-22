@@ -26,19 +26,22 @@ pipeline {
 
         stage('Pruebas unitarias backend') {
             steps {
-                sh 'docker-compose exec backend pytest --cov=app --cov-report=xml'
+                sh 'docker-compose exec --rm backend pytest --cov=app --cov-report=xml'
             }
         }
 
-        stage('Subir cobertura a Codecov') {
+        stage('Download Codecov CLI') {
             steps {
                 sh '''
-                    docker-compose exec --rm backend sh -c "
-                        curl -Os https://uploader.codecov.io/latest/linux/codecov &&
-                        chmod +x codecov &&
-                        ./codecov -t ${CODECOV_TOKEN}
-                    "
+                curl -Os https://uploader.codecov.io/latest/linux/codecov
+                chmod +x codecov
                 '''
+            }
+        }
+
+        stage('Upload to Codecov') {
+            steps {
+                sh './codecov --token=$CODECOV_TOKEN --file=coverage.xml --flags=unittests'
             }
         }
 
