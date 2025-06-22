@@ -23,6 +23,30 @@ pipeline {
             }
         }
 
+        stage('Pruebas unitarias backend') {
+            steps {
+                // Limpia red antigua para evitar conflicto
+                sh 'docker network rm integracion-continua_default || true'
+                // Ejecuta pruebas
+                sh 'docker-compose run --rm backend pytest --cov=app --cov-report=term-missing'
+            }
+        }
+
+        stage('Subir cobertura a Codecov') {
+            environment {
+                CODECOV_TOKEN = credentials('CODECOV_TOKEN')
+            }
+            steps {
+                sh '''
+                    docker-compose run --rm backend sh -c "
+                        curl -Os https://uploader.codecov.io/latest/linux/codecov &&
+                        chmod +x codecov &&
+                        ./codecov
+                    "
+                '''
+            }
+        }
+
         stage('Desplegar') {
             when {
                 expression { currentBuild.currentResult == 'SUCCESS' }
