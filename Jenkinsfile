@@ -19,25 +19,20 @@ pipeline {
 
         stage('Verificar archivos en contenedor') {
             steps {
-                sh 'docker network rm integracion-continua_default || true'
-                sh 'docker-compose run --rm frontend ls -R /usr/share/nginx/html'
+                sh 'docker-compose exec --rm frontend ls -R /usr/share/nginx/html'
             }
         }
 
         stage('Pruebas unitarias backend') {
             steps {
-                sh 'docker network rm integracion-continua_default || true'
-                sh 'docker-compose run --rm backend pytest --cov=app --cov-report=term-missing'
+                sh 'docker-compose exec --rm backend pytest --cov=app --cov-report=term-missing'
             }
         }
 
         stage('Subir cobertura a Codecov') {
-            environment {
-                CODECOV_TOKEN = credentials('CODECOV_TOKEN')
-            }
             steps {
                 sh '''
-                    docker-compose run --rm backend sh -c "
+                    docker-compose exec --rm backend sh -c "
                         curl -Os https://uploader.codecov.io/latest/linux/codecov &&
                         chmod +x codecov &&
                         ./codecov
