@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment{
         DOCKER_HOST = 'unix:///var/run/docker.sock'
+        CODECOV_TOKEN = credentials('CODECOV_TOKEN')
     }
 
     stages {
@@ -35,7 +36,7 @@ pipeline {
                     docker-compose exec --rm backend sh -c "
                         curl -Os https://uploader.codecov.io/latest/linux/codecov &&
                         chmod +x codecov &&
-                        ./codecov
+                        ./codecov -t ${CODECOV_TOKEN}
                     "
                 '''
             }
