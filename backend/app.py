@@ -6,7 +6,7 @@ CORS(app)
 
 # Diccionario de tasas
 tasas = {
-    'USD': 4.0,
+    'USD': 1.0,
     'EUR': 0.9,
     'MXN': 17.0
 }
